@@ -1,0 +1,265 @@
+  ###########################
+  #    OPENCTI Connector    #
+  ###########################
+
+  connector-opencti:
+    image: opencti/connector-opencti:latest
+    environment:
+      - OPENCTI_URL=http://opencti:8080
+      - OPENCTI_TOKEN=${OPENCTI_ADMIN_TOKEN}
+      - CONNECTOR_ID=${CONNECTOR_OPENCTI_ID}
+      - "CONNECTOR_NAME=OpenCTI Datasets"
+      - CONNECTOR_SCOPE=marking-definition,identity,location
+      - CONNECTOR_AUTO_CREATE_SERVICE_ACCOUNT=true
+      - CONNECTOR_AUTO_CREATE_SERVICE_ACCOUNT_CONFIDENCE_LEVEL=100
+    restart: always
+    depends_on:
+      opencti:
+        condition: service_healthy
+  connector-mitre:
+    image: opencti/connector-mitre:latest
+    environment:
+      - OPENCTI_URL=http://opencti:8080
+      - OPENCTI_TOKEN=${OPENCTI_ADMIN_TOKEN}
+      - CONNECTOR_ID=${CONNECTOR_MITRE_ID}
+      - CONNECTOR_AUTO_CREATE_SERVICE_ACCOUNT=true
+      - CONNECTOR_AUTO_CREATE_SERVICE_ACCOUNT_CONFIDENCE_LEVEL=75
+    restart: always
+    depends_on:
+      opencti:
+        condition: service_healthy
+
+  # CISA Known Exploited Vulnerabilities
+  connector-cisa-known-exploited-vulnerabilities:
+    image: opencti/connector-cisa-known-exploited-vulnerabilities:latest
+    environment:
+      - OPENCTI_URL=http://opencti:8080
+      - OPENCTI_TOKEN=${OPENCTI_ADMIN_TOKEN}
+    restart: always
+    depends_on:
+      opencti:
+        condition: service_healthy
+
+  # CriminalIP C2-Daily-Feed
+  connector-criminalip-c2-daily-feed:
+    image: opencti/connector-criminalip-c2-daily-feed:latest
+    environment:
+      - OPENCTI_URL=http://opencti:8080
+      - OPENCTI_TOKEN=${OPENCTI_ADMIN_TOKEN}
+      - CONNECTOR_ID= # Valid UUIDv4
+      - CONNECTOR_TYPE=EXTERNAL_IMPORT
+      - "CONNECTOR_NAME=Criminal IP C2 Daily Feed"
+      - CONNECTOR_SCOPE=ipv4-addr
+      - CONNECTOR_LOG_LEVEL=error
+      - CRIMINALIP_INTERVAL=1 #Day
+      - CRIMINALIP_CONFIDENCE_SCORE=100
+      - CRIMINALIP_CSV_URL=https://raw.githubusercontent.com/criminalip/C2-Daily-Feed/refs/heads/main
+    restart: always
+    depends_on:
+      opencti:
+        condition: service_healthy
+  # CVE - NVD
+  connector-cve:
+    image: opencti/connector-cve:latest
+    environment:
+      - OPENCTI_URL=http://opencti:8080
+      - OPENCTI_TOKEN=${OPENCTI_ADMIN_TOKEN}
+      - CVE_API_KEY= # Required
+    depends_on:
+      opencti:
+        condition: service_healthy
+
+  # AbuseIPDB
+  connector-abuseipdb-ipblacklist:
+    image: opencti/connector-abuseipdb-ipblacklist:latest
+    environment:
+      # Connector's generic execution parameters
+      - OPENCTI_URL=http://opencti:8080
+      - OPENCTI_TOKEN=${OPENCTI_ADMIN_TOKEN}
+      # Connector's definition parameters REQUIRED
+      - CONNECTOR_ID= # Valid UUIDv4
+      - "CONNECTOR_NAME=AbuseIPDB IP Blacklist"
+      - CONNECTOR_SCOPE=abuseipdb
+      - CONNECTOR_LOG_LEVEL=error
+      - ABUSEIPDB_API_KEY= # Required
+      - CONNECTOR_DURATION_PERIOD=PT12H # ISO8601 format in String, start with 'P...' for Perio
+      - ABUSEIPDB_TLP_LEVEL=clear
+      - ABUSEIPDB_SCORE=75
+      - ABUSEIPDB_LIMIT=1000
+    restart: always
+    depends_on:
+      opencti:
+        condition: service_healthy
+
+  # Threat Fox
+  connector-threatfox:
+    image: opencti/connector-threatfox:latest
+    environment:
+      - OPENCTI_URL=http://opencti:8080
+      - OPENCTI_TOKEN=${OPENCTI_ADMIN_TOKEN}
+    restart: always
+    depends_on:
+      opencti:
+        condition: service_healthy
+
+  # URLhaus
+  connector-urlhaus:
+    image: opencti/connector-urlhaus:latest
+    environment:
+      - OPENCTI_URL=http://opencti:8080
+      - OPENCTI_TOKEN=${OPENCTI_ADMIN_TOKEN}
+      - CONNECTOR_ID= # Valid UUIDv4
+      - CONNECTOR_NAME=Abuse.ch URLhaus
+      - CONNECTOR_SCOPE=urlhaus
+      - CONNECTOR_LOG_LEVEL=error
+      - URLHAUS_INTERVAL=3
+      - URLHAUS_CSV_URL=https://urlhaus.abuse.ch/downloads/csv_recent/
+      - URLHAUS_DEFAULT_X_OPENCTI_SCORE=80 # Optional: Defaults to 80.
+      - URLHAUS_IMPORT_OFFLINE=true
+      - URLHAUS_THREATS_FROM_LABELS=true
+    restart: always
+    depends_on:
+      opencti:
+        condition: service_healthy
+
+  # URLhaus Recent Payloads
+  connector-urlhaus-recent-payloads:
+    image: opencti/connector-urlhaus-recent-payloads:latest
+    environment:
+      - OPENCTI_URL=http://opencti:8080
+      - OPENCTI_TOKEN=${OPENCTI_ADMIN_TOKEN}
+      - CONNECTOR_ID= # Valid UUIDv4
+      - "CONNECTOR_NAME=URLhaus Recent Payloads"
+      - CONNECTOR_LOG_LEVEL=error
+      - URLHAUS_RECENT_PAYLOADS_API_URL=https://urlhaus-api.abuse.ch/v1/
+      - URLHAUS_RECENT_PAYLOADS_API_KEY= # Required, issued for free by URLHaus - https://urlhaus-api.abuse.ch/#auth_key
+      - URLHAUS_RECENT_PAYLOADS_COOLDOWN_SECONDS=300 # Time to wait in seconds between subsequent requests
+      - URLHAUS_RECENT_PAYLOADS_INCLUDE_FILETYPES=exe,dll,docm,docx,doc,xls,xlsx,xlsm,js,xll # (Optional) Only download files if any tag matches. (Comma separated)
+      - URLHAUS_RECENT_PAYLOADS_INCLUDE_SIGNATURES= # (Optional) Only download files matching these Yara rules. (Comma separated)
+      - URLHAUS_RECENT_PAYLOADS_SKIP_UNKNOWN_FILETYPES=true # Skip files with an unknown file type
+      - URLHAUS_RECENT_PAYLOADS_SKIP_NULL_SIGNATURE=true # Skip files that didn't match known Yara rules
+      - URLHAUS_RECENT_PAYLOADS_LABELS=urlhaus # (Optional) Labels to apply to uploaded Artifacts. (Comma separated)
+      - URLHAUS_RECENT_PAYLOADS_LABELS_COLOR=#54483b
+      - URLHAUS_RECENT_PAYLOADS_SIGNATURE_LABEL_COLOR=#0059f7 # Color for Yara rule match label
+      - URLHAUS_RECENT_PAYLOADS_FILETYPE_LABEL_COLOR=#54483b # Color to use for filetype label
+    restart: always
+    depends_on:
+      opencti:
+        condition: service_healthy
+  # AlienVault
+  connector-alienvault:
+    image: opencti/connector-alienvault:latest
+    environment:
+      - OPENCTI_URL=http://opencti:8080
+      - OPENCTI_TOKEN=${OPENCTI_ADMIN_TOKEN}
+      - CONNECTOR_ID= # Valid UUIDv4
+      - CONNECTOR_NAME=AlienVault
+      - CONNECTOR_SCOPE=alienvault
+      - CONNECTOR_LOG_LEVEL=error
+      - CONNECTOR_DURATION_PERIOD=PT30M # In ISO8601 Format starting with "P" for Period ex: "PT30M" = Period time of 30 minutes
+      - ALIENVAULT_BASE_URL=https://otx.alienvault.com
+      - ALIENVAULT_API_KEY= # Required
+      - ALIENVAULT_TLP=White
+      - ALIENVAULT_CREATE_OBSERVABLES=true
+      - ALIENVAULT_CREATE_INDICATORS=true
+      - ALIENVAULT_PULSE_START_TIMESTAMP=2022-05-01T00:00:00                  # BEWARE! Could be a lot of pulses!
+      - ALIENVAULT_REPORT_TYPE=threat-report
+      - ALIENVAULT_REPORT_STATUS=New
+      - ALIENVAULT_GUESS_MALWARE=false                                        # Use tags to guess malware.
+      - ALIENVAULT_GUESS_CVE=false                                            # Use tags to guess CVE.
+      - ALIENVAULT_EXCLUDED_PULSE_INDICATOR_TYPES=FileHash-MD5,FileHash-SHA1  # Excluded Pulse indicator types.
+      - ALIENVAULT_ENABLE_RELATIONSHIPS=true                                  # Enable/Disable relationship creation between SDOs.
+      - ALIENVAULT_ENABLE_ATTACK_PATTERNS_INDICATES=false                     # Enable/Disable "indicates" relationships between indicators and attack patterns
+      - ALIENVAULT_FILTER_INDICATORS=false                                    # Filter indicators by their created datetime
+      - ALIENVAULT_INTERVAL_SEC=1800
+      - ALIENVAULT_DEFAULT_X_OPENCTI_SCORE=50
+      - ALIENVAULT_X_OPENCTI_SCORE_IP=60
+      - ALIENVAULT_X_OPENCTI_SCORE_DOMAIN=70
+      - ALIENVAULT_X_OPENCTI_SCORE_HOSTNAME=75
+      - ALIENVAULT_X_OPENCTI_SCORE_EMAIL=70
+      - ALIENVAULT_X_OPENCTI_SCORE_FILE=85
+      - ALIENVAULT_X_OPENCTI_SCORE_URL=80
+      - ALIENVAULT_X_OPENCTI_SCORE_MUTEX=60
+      - ALIENVAULT_X_OPENCTI_SCORE_CRYPTOCURRENCY_WALLET=80
+    restart: always
+    depends_on:
+      opencti:
+        condition: service_healthy
+
+  # Wiz
+  connector-wiz:
+    image: opencti/connector-wiz:latest
+    environment:
+      - OPENCTI_URL=http://opencti:8080
+      - OPENCTI_TOKEN=${OPENCTI_ADMIN_TOKEN}
+      - CONNECTOR_ID= # Valid UUIDv4
+      - CONNECTOR_NAME=Wiz Cloud Threat LandScape
+      - CONNECTOR_SCOPE=wiz
+      - CONNECTOR_LOG_LEVEL=error
+      - CONNECTOR_DURATION_PERIOD=P1D # ISO8601 format in String, start with 'P...' for Period
+      - WIZ_THREAT_ACTOR_AS_INTRUSION_SET=False
+      - WIZ_TLP_LEVEL=clear
+    restart: always
+    depends_on:
+      opencti:
+        condition: service_healthy
+
+  # VX Vault
+  connector-vxvault:
+    image: opencti/connector-vxvault:latest
+    environment:
+      - OPENCTI_URL=http://opencti:8080
+      - OPENCTI_TOKEN=${OPENCTI_ADMIN_TOKEN}
+      - CONNECTOR_ID= # Valid UUIDv4
+      - "CONNECTOR_NAME=VX Vault URL list"
+      - CONNECTOR_SCOPE=vxvault
+      - CONNECTOR_LOG_LEVEL=error
+      - VXVAULT_URL=https://vxvault.net/URL_List.php
+      - VXVAULT_CREATE_INDICATORS=true
+      - VXVAULT_INTERVAL=3 # In days, must be strictly greater than 1
+      - VXVAULT_SSL_VERIFY=False
+    restart: always
+    depends_on:
+      opencti:
+        condition: service_healthy
+
+  # Tweetfeed
+  connector-tweetfeed:
+    image: opencti/connector-tweetfeed:latest
+    environment:
+      - OPENCTI_URL=http://opencti:8080
+      - OPENCTI_TOKEN=${OPENCTI_ADMIN_TOKEN}
+      - CONNECTOR_ID= # Valid UUIDv4
+      - CONNECTOR_NAME=Tweetfeed
+      - CONNECTOR_SCOPE=tweetfeed
+      - CONNECTOR_LOG_LEVEL=error
+      - TWEETFEED_CONFIDENCE_LEVEL=15 # From 0 (Unknown) to 100 (Fully trusted)
+      - TWEETFEED_CREATE_INDICATORS=true
+      - TWEETFEED_CREATE_OBSERVABLES=true
+      - TWEETFEED_INTERVAL=1
+      - TWEETFEED_UPDATE_EXISTING_DATA=true
+      - "TWEETFEED_ORG_DESCRIPTION=Tweetfeed, a connector to import IOC from Twitter."
+      - TWEETFEED_ORG_NAME=Tweetfeed
+      - TWEETFEED_DAYS_BACK_IN_TIME=30 # Number of days to retrieve data back in time
+    restart: always
+    depends_on:
+      opencti:
+        condition: service_healthy
+
+  # Stopforumspam
+  connector-stopforumspam:
+    image: opencti/connector-stopforumspam:latest
+    environment:
+      - OPENCTI_URL=http://opencti:8080
+      - OPENCTI_TOKEN=${OPENCTI_ADMIN_TOKEN}
+      - CONNECTOR_ID= # Valid UUIDv4
+      - CONNECTOR_NAME=Stopforumspam
+      - CONNECTOR_SCOPE=stopforumspam
+      - CONNECTOR_LOG_LEVEL=error
+      - STOPFORUMSPAM_URL=https://www.stopforumspam.com/downloads/toxic_domains_whole_filtered_50000.txt
+      - STOPFORUMSPAM_CREATE_INDICATORS=true
+      - STOPFORUMSPAM_INTERVAL=3 # In days, must be strictly greater than 1
+    restart: always
+    depends_on:
+      opencti:
+        condition: service_healthy
