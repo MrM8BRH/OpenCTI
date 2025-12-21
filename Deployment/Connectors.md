@@ -1,3 +1,17 @@
+| Priority     | Connector                     | Why It’s Recommended                                               |
+|--------------|-------------------------------|---------------------------------------------------------------------|
+| Must-Have    | MITRE ATT&CK Enterprise       | Foundation for TTP mapping, threat modeling, and attribution        |
+| Must-Have    | OpenCTI Datasets              | Core contextual entities (countries, sectors, organizations, etc.) |
+| Very Useful  | CVE (NVD)                     | Vulnerability context and correlation with threats                  |
+| Very Useful  | CISA Known Exploited Vulns    | Focuses only on CVEs actively exploited in the wild                 |
+| Operational  | AbuseIPDB                     | High-confidence malicious IPs (tunable confidence threshold)        |
+| Operational  | ThreatFox                     | Community-driven IOCs with malware context                          |
+| Operational  | URLhaus                       | High-quality malicious URLs and hosting infrastructure              |
+| Contextual  | AlienVault OTX                | Structured pulses with IOCs and analyst context                     |
+| Contextual  | Feedly                        | Threat reports and campaign write-ups (context over raw IOCs)       |
+| Contextual  | SEKOIA                        | Supplemental CTI enrichment and relationships                       |
+
+
 ### Adding OpenCTI Connectors
 
 #### Clone the Official Connectors Repository
