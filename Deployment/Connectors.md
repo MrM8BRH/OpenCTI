@@ -2,7 +2,8 @@
 
 #### Clone the Official Connectors Repository
 ```
-git clone https://github.com/OpenCTI-Platform/connectors.git cd connectors
+git clone https://github.com/OpenCTI-Platform/connectors.git
+cd connectors
 ```
 > Note:
 >
