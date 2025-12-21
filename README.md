@@ -11,3 +11,4 @@ Table of Contents
 1. 🗒️ [Deployment](https://github.com/MrM8BRH/OpenCTI/blob/main/Deployment/Deployment.md)
 2. 🗒️ [Connectors](https://github.com/MrM8BRH/OpenCTI/blob/main/Deployment/Connectors.md)
 3. 🗒️ [Docker Commands](https://github.com/MrM8BRH/OpenCTI/blob/main/Deployment/Docker%20Commands.md)
+4. 🗒️ [Template.yml](https://github.com/MrM8BRH/OpenCTI/blob/main/Deployment/Template.yml)
