@@ -24,9 +24,9 @@ All OpenCTI application services are **stateless** and can be scaled horizontall
 Recommended baseline for **production environments**:
 | Component      | Recommended                         |
 | -------------- | ----------------------------------- |
-| CPU            | 8+ vCPUs                            |
+| CPU            | 16+ vCPUs                            |
 | RAM            | 32+ GB                              |
-| Disk           | SSD, 200 GB+                        |
+| Disk           | SSD, 600 GB+                        |
 | Docker         | 20+                                 |
 | Docker Compose | v2.x                                |
 > **Note:**  
