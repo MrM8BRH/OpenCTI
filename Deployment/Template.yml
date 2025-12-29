@@ -59,6 +59,7 @@
       opencti:
         condition: service_healthy
   # CVE - NVD
+  # https://nvd.nist.gov/developers/request-an-api-key
   connector-cve:
     image: opencti/connector-cve:latest
     environment:
@@ -70,6 +71,7 @@
         condition: service_healthy
 
   # AbuseIPDB
+  # https://www.abuseipdb.com/api
   connector-abuseipdb-ipblacklist:
     image: opencti/connector-abuseipdb-ipblacklist:latest
     environment:
@@ -123,6 +125,7 @@
         condition: service_healthy
 
   # URLhaus Recent Payloads
+  # https://urlhaus.abuse.ch/api/
   connector-urlhaus-recent-payloads:
     image: opencti/connector-urlhaus-recent-payloads:latest
     environment:
@@ -146,7 +149,9 @@
     depends_on:
       opencti:
         condition: service_healthy
+  
   # AlienVault
+  # https://otx.alienvault.com/api
   connector-alienvault:
     image: opencti/connector-alienvault:latest
     environment:
