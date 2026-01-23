@@ -347,6 +347,48 @@ After completing these steps, Nginx will handle SSL termination for your OpenCTI
 </details>
 
 <details>
+<summary><b>Configure a Live Stream Between Two OpenCTI Instances</b></summary>
+
+### 1) OpenCTI_A (Source) – Sharing User & Token
+- Create a dedicated user `Settings → Security → Users` → e.g. `[S] OpenCTI_B Stream`
+- Add the user to the `Connectors` group
+- Grant `Access data sharing` permission - *(Optional: `Manage data sharing` if the user will manage streams)*
+- Copy the user **API token** (used by OpenCTI_B)
+
+### 2) OpenCTI_A (Source) – Create Live Stream
+- Path: `Data → Data sharing → Live streams → CREATE`
+- **Name**: `Sync to OpenCTI_B - Indicators`
+- **Filters** (example):
+  - Entity type = `Indicator`
+  - Optional: `pattern type`, `labels`, `markings`, `confidence`
+- Save and start the stream
+- **Note**: Dependencies/relationships may also be sent automatically
+- **Stream endpoint**:
+  ```
+  https://opencti_a.example/stream/{STREAM_ID}
+  ```
+### 3) OpenCTI_B (Destination)
+- Path: `Data → Ingestion → OpenCTI Streams`
+- **Remote OpenCTI URL**: *(Base URL only)*
+  ```
+  https://opencti-a.example
+  ```
+- **Remote token**: OpenCTI_A sharing user token
+- Validate the connection
+- Select the Live Stream created on OpenCTI_A
+
+#### Important Options
+- **User responsible for data creation**: Choose a dedicated “import” user on OpenCTI_B for traceability.
+- **Starting synchronization**: Set the oldest date to pull.
+- **Take deletions into account**: If enabled, deletions on OpenCTI_A can delete on OpenCTI_B
+- **Verify SSL certificate**: Enable for production; disable only for lab/self-signed testing
+- **Avoid dependencies resolution**: Imports only entities without relationships (useful if you want minimal objects)
+- **Use perfect synchronization**: Imported objects overwrite existing ones (true “sync” behavior)
+- Save and start the stream
+
+</details>
+
+<details>
 <summary><b>UUIDv4 Generator</b></summary>
 
 Use a UUIDv4 generator when required (tokens, IDs, secrets): [uuidgenerator](https://www.uuidgenerator.net/)
