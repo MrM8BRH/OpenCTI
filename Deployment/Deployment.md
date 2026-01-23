@@ -265,6 +265,85 @@ Update the APP__BASE_URL environment variable in your OpenCTI service configurat
 After completing these steps, Nginx will handle SSL termination for your OpenCTI service and proxy requests to `http://localhost:8080` internally. Access your OpenCTI service securely via `https://your-domain.com`.
 </details>
 
+<details>
+<summary><b>Debian</b></summary>
+
+### Step 1: Install Nginx
+```
+apt install nginx -y
+```
+### Step 2: Configure SSL Certificates
+
+```
+mkdir -p /etc/ssl/opencti && cd /etc/ssl/opencti
+```
+Interactive
+```
+openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -sha256 -days 365
+```
+Non-interactive and 10 years expiration
+```
+openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -sha256 -days 3650 -nodes -subj "/C=XX/ST=StateName/L=CityName/O=CompanyName/OU=CompanySectionName/CN=CommonNameOrHostname"
+```
+Fix permissions
+```
+chown root:root /etc/ssl/opencti/key.pem
+chown root:root /etc/ssl/opencti/cert.pem
+chmod 600 /etc/ssl/opencti/key.pem
+chmod 644 /etc/ssl/opencti/cert.pem
+```
+### Step 3: Create an Nginx Configuration
+```
+nano /etc/nginx/sites-available/opencti
+```
+Add the following configuration to the file:
+```
+server {
+listen 443 ssl;
+server_name your-domain.com;
+
+ssl_certificate /etc/ssl/opencti/cert.pem;
+ssl_certificate_key /etc/ssl/opencti/key.pem;
+
+location / {
+    proxy_pass http://localhost:8080;
+    proxy_set_header Host $host;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header X-Forwarded-Proto $scheme;
+	}
+}
+
+server {
+listen 80;
+server_name your-domain.com;
+return 301 https://$host$request_uri;
+}
+```
+
+### Step 4: Enable the Nginx Configuration
+Create a symbolic link to enable the new configuration:
+```
+sudo ln -s /etc/nginx/sites-available/opencti /etc/nginx/sites-enabled/
+```
+### Step 5: Test Nginx Configuration and Restart
+Test the Nginx configuration for syntax errors:
+```
+sudo nginx -t
+```
+
+If the test is successful, restart Nginx to apply the changes:
+```
+systemctl restart nginx
+```
+
+### Step 6: Update OpenCTI Configuration
+Update the APP__BASE_URL environment variable in your OpenCTI service configuration to use https:
+- `APP__BASE_URL=https://your-domain.com`
+
+After completing these steps, Nginx will handle SSL termination for your OpenCTI service and proxy requests to `http://localhost:8080` internally. Access your OpenCTI service securely via `https://your-domain.com`.
+</details>
+
 </details>
 
 <details>
