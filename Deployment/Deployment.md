@@ -144,15 +144,13 @@ systemctl enable docker.socket
 
 #### Download OpenCTI Docker Compose Files
 ```
-cd /opt && mkdir opencti && cd ~/opencti
+mkdir -p /opt/opencti && cd /opt/opencti
 wget https://raw.githubusercontent.com/OpenCTI-Platform/docker/refs/heads/master/docker-compose.yml
 wget https://raw.githubusercontent.com/OpenCTI-Platform/docker/refs/heads/master/rabbitmq.conf
 ```
 #### Configure Environment Variables
 ```
-touch .env
-chmod 600 .env
-nano .env
+touch .env && chmod 600 .env && nano .env
 ```
 Add the following
 ```
