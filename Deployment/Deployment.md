@@ -189,6 +189,7 @@ docker compose up -d
 <details>
 <summary><b>Using OpenCTI Containers</b></summary>
 
+[Configuration keys](https://docs.opencti.io/6.9.X/deployment/configuration/)
 ```
 mkdir -p /opt/opencti/certs
 cd /opt/opencti/certs
