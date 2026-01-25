@@ -187,7 +187,51 @@ docker compose up -d
 <summary><b>Add Cerificate to OpenCTI</b></summary>
 
 <details>
-<summary><b>RHEL</b></summary>
+<summary><b>Using OpenCTI Containers</b></summary>
+
+```
+mkdir -p /opt/opencti/certs
+cd /opt/opencti/certs
+```
+Interactive
+```
+openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -sha256 -days 365
+```
+Non-interactive and 10 years expiration
+```
+openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -sha256 -days 3650 -nodes -subj "/C=XX/ST=StateName/L=CityName/O=CompanyName/OU=CompanySectionName/CN=CommonNameOrHostname"
+```
+.env
+```
+OPENCTI_HEALTHCHECK_ACCESS_KEY=
+OPENCTI_BASE_URL=https://IP_ADDR:8080
+OPENCTI_HOST=IP_ADDR
+```
+docker-compose.yml
+```
+  opencti:
+    image: opencti/platform:6.9.10
+    environment:
+      - APP__PORT=8080
+      - APP__BASE_URL=https://IP_ADDR:8080
+      - APP__HTTPS_CERT__KEY=/certs/key.pem
+      - APP__HTTPS_CERT__CRT=/certs/cert.pem
+#      - APP__HTTPS_CERT__CA=/certs/cert.pem
+      - APP__HTTPS_CERT__REJECT_UNAUTHORIZED=false
+      - APP__HTTPS_CERT__COOKIE_SECURE=true
+      - APP__HEALTH_ACCESS_KEY=
+    volumes:
+      - /opt/opencti/certs:/certs:ro
+    healthcheck:
+      test:  ["CMD-SHELL", "wget --no-check-certificate -qO- \"https://localhost:8080/health?health_access_key=$(printenv APP__HEALTH_ACCESS_KEY)\" || exit 1"]
+      interval: 20s
+      timeout: 10s
+      retries: 30
+```
+</details>
+
+<details>
+<summary><b>RHEL (Nginx)</b></summary>
 
 ### Step 1: Install Nginx
 ```
@@ -266,7 +310,7 @@ After completing these steps, Nginx will handle SSL termination for your OpenCTI
 </details>
 
 <details>
-<summary><b>Debian</b></summary>
+<summary><b>Debian (Nginx)</b></summary>
 
 ### Step 1: Install Nginx
 ```
