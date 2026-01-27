@@ -440,17 +440,6 @@ Use a UUIDv4 generator when required (tokens, IDs, secrets): [uuidgenerator](htt
 </details>
 
 <details>
-<summary><b>Production Deployment (Post-PoC)</b></summary>
-  
-Docker Swarm (Recommended for Scaling)
-On the manager node:
-```
-docker swarm init
-docker stack deploy -c docker-compose.yml opencti
-```
-</details>
-
-<details>
 <summary><b>Validation & Troubleshooting</b></summary>
 
 - Verify Running Containers (Expect approximately ~20 containers)
@@ -463,7 +452,13 @@ curl -I http://opencti:8080
 ```
 - View Logs
 ```
-docker logs -f opencti
+docker logs container_name
 ```
 > Use container-specific logs for deeper troubleshooting when required.
+</details>
+
+<details>
+<summary><b>Resources</b></summary>
+
+- [Top 100 Cyber Security RSS Feeds (Security RSS)](https://rss.feedspot.com/cyber_security_rss_feeds/)
 </details>
