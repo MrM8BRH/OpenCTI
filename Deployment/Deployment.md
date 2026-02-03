@@ -194,14 +194,6 @@ docker compose up -d
 mkdir -p /opt/opencti/certs
 cd /opt/opencti/certs
 ```
-Interactive
-```
-openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -sha256 -days 365
-```
-Non-interactive and 10 years expiration
-```
-openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -sha256 -days 3650 -nodes -subj "/C=XX/ST=StateName/L=CityName/O=CompanyName/OU=CompanySectionName/CN=CommonNameOrHostname"
-```
 .env
 ```
 OPENCTI_HEALTHCHECK_ACCESS_KEY=
@@ -240,14 +232,7 @@ dnf install nginx -y
 ```
 ### Step 2: Configure SSL Certificates
 
-Interactive
-```
-openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -sha256 -days 365
-```
-Non-interactive and 10 years expiration
-```
-openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -sha256 -days 3650 -nodes -subj "/C=XX/ST=StateName/L=CityName/O=CompanyName/OU=CompanySectionName/CN=CommonNameOrHostname"
-```
+Configure SSL Certificates
 ```
 mv key.pem /etc/pki/tls/private/key.pem
 mv cert.pem /etc/pki/tls/certs/cert.pem
@@ -320,15 +305,8 @@ apt install nginx -y
 ### Step 2: Configure SSL Certificates
 
 ```
-mkdir -p /etc/ssl/opencti && cd /etc/ssl/opencti
-```
-Interactive
-```
-openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -sha256 -days 365
-```
-Non-interactive and 10 years expiration
-```
-openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -sha256 -days 3650 -nodes -subj "/C=XX/ST=StateName/L=CityName/O=CompanyName/OU=CompanySectionName/CN=CommonNameOrHostname"
+mkdir -p /etc/ssl/opencti
+cp cert.pem key.pem /etc/ssl/opencti/
 ```
 Fix permissions
 ```
