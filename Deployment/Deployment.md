@@ -147,35 +147,18 @@ systemctl enable docker.socket
 mkdir -p /opt/opencti && cd /opt/opencti
 wget https://raw.githubusercontent.com/OpenCTI-Platform/docker/refs/heads/master/docker-compose.yml
 wget https://raw.githubusercontent.com/OpenCTI-Platform/docker/refs/heads/master/rabbitmq.conf
+wget https://raw.githubusercontent.com/OpenCTI-Platform/docker/refs/heads/master/.env.sample
 ```
 #### Configure Environment Variables
 ```
-touch .env && chmod 600 .env && nano .env
+cp .env.sample .env
+nano .env
 ```
-Add the following
+Change the following
 ```
-OPENCTI_ADMIN_EMAIL=admin@opencti.io
 OPENCTI_ADMIN_PASSWORD=changeme
-OPENCTI_ADMIN_TOKEN=71526463-c9d2-44fd-b8d0-ea875bc7df39
-OPENCTI_BASE_URL=http://localhost:8080
+OPENCTI_ADMIN_TOKEN=ChangeMe_UUIDv4
 OPENCTI_HEALTHCHECK_ACCESS_KEY=changeme
-OPENCTI_HOST=localhost
-OPENCTI_PORT=8080
-MINIO_ROOT_USER=opencti
-MINIO_ROOT_PASSWORD=changeme
-RABBITMQ_DEFAULT_USER=opencti
-RABBITMQ_DEFAULT_PASS=changeme
-CONNECTOR_EXPORT_FILE_STIX_ID=dd817c8b-abae-460a-9ebc-97b1551e70e6
-CONNECTOR_EXPORT_FILE_CSV_ID=7ba187fb-fde8-4063-92b5-c3da34060dd7
-CONNECTOR_EXPORT_FILE_TXT_ID=ca715d9c-bd64-4351-91db-33a8d728a58b
-CONNECTOR_IMPORT_FILE_STIX_ID=72327164-0b35-482b-b5d6-a5a3f76b845f
-CONNECTOR_IMPORT_DOCUMENT_ID=c3970f8a-ce4b-4497-a381-20b7256f56f0
-CONNECTOR_ANALYSIS_ID=4dffd77c-ec11-4abe-bca7-fd997f79fa36
-CONNECTOR_SPLUNK_ID=511a18bb-03b6-50e3-888a-08a8e656bf99
-SMTP_HOSTNAME=localhost
-ELASTIC_MEMORY_SIZE=8G
-XTM_COMPOSER_ID=3fa85f64-5717-4562-b3fc-2c963f66afa6
-COMPOSE_PROJECT_NAME=opencti
 ```
 #### Start OpenCTI
 ```
