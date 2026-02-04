@@ -193,26 +193,23 @@ docker compose up -d
 ```
 mkdir -p /opt/opencti/certs
 cd /opt/opencti/certs
+# key.pem cert.pem ca.pem
 ```
 .env
 ```
-OPENCTI_HEALTHCHECK_ACCESS_KEY=
-OPENCTI_BASE_URL=https://IP_ADDR:8080
-OPENCTI_HOST=IP_ADDR
+OPENCTI_HEALTHCHECK_ACCESS_KEY=changeme
+OPENCTI_EXTERNAL_SCHEME=http
 ```
 docker-compose.yml
 ```
   opencti:
     image: opencti/platform:6.9.10
     environment:
-      - APP__PORT=8080
-      - APP__BASE_URL=https://IP_ADDR:8080
       - APP__HTTPS_CERT__KEY=/certs/key.pem
       - APP__HTTPS_CERT__CRT=/certs/cert.pem
-#      - APP__HTTPS_CERT__CA=/certs/cert.pem
+      - APP__HTTPS_CERT__CA=["/certs/ca.pem"]
       - APP__HTTPS_CERT__REJECT_UNAUTHORIZED=false
       - APP__HTTPS_CERT__COOKIE_SECURE=true
-      - APP__HEALTH_ACCESS_KEY=
     volumes:
       - /opt/opencti/certs:/certs:ro
     healthcheck:
