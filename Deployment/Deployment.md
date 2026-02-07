@@ -191,7 +191,7 @@ docker-compose.yml
       - APP__HTTPS_CERT__KEY=/certs/key.pem
       - APP__HTTPS_CERT__CRT=/certs/cert.pem
       - APP__HTTPS_CERT__CA=["/certs/ca.pem"]
-      - APP__HTTPS_CERT__REJECT_UNAUTHORIZED=false
+      - APP__HTTPS_CERT__REJECT_UNAUTHORIZED=true
       - APP__HTTPS_CERT__COOKIE_SECURE=true
     volumes:
       - /opt/opencti/certs:/certs:ro
