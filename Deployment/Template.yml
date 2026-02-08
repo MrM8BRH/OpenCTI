@@ -2,7 +2,9 @@
   #    OPENCTI Connector    #
   ###########################
 
-  # CISA Known Exploited Vulnerabilities
+  # ┌────────────────────────────────────────────────────┐
+  # │ CISA Known Exploited Vulnerabilities               │
+  # └────────────────────────────────────────────────────┘
   connector-cisa-known-exploited-vulnerabilities:
     image: opencti/connector-cisa-known-exploited-vulnerabilities:latest
     environment:
@@ -13,7 +15,9 @@
       opencti:
         condition: service_healthy
 
-  # CriminalIP C2-Daily-Feed
+  # ┌────────────────────────────────────────────────────┐
+  # │ CriminalIP C2-Daily-Feed                           │
+  # └────────────────────────────────────────────────────┘
   connector-criminalip-c2-daily-feed:
     image: opencti/connector-criminalip-c2-daily-feed:latest
     environment:
@@ -32,7 +36,9 @@
       opencti:
         condition: service_healthy
   
-  # Threat Fox
+  # ┌────────────────────────────────────────────────────┐
+  # │ Threat Fox                                         │
+  # └────────────────────────────────────────────────────┘
   connector-threatfox:
     image: opencti/connector-threatfox:latest
     environment:
@@ -43,7 +49,9 @@
       opencti:
         condition: service_healthy
 
-  # URLhaus
+  # ┌────────────────────────────────────────────────────┐
+  # │ URLhaus                                            │
+  # └────────────────────────────────────────────────────┘
   connector-urlhaus:
     image: opencti/connector-urlhaus:latest
     environment:
@@ -63,7 +71,9 @@
       opencti:
         condition: service_healthy
 
-  # Wiz
+  # ┌────────────────────────────────────────────────────┐
+  # │ Wiz                                                │
+  # └────────────────────────────────────────────────────┘
   connector-wiz:
     image: opencti/connector-wiz:latest
     environment:
@@ -80,8 +90,9 @@
     depends_on:
       opencti:
         condition: service_healthy
-
-  # VX Vault
+  # ┌────────────────────────────────────────────────────┐
+  # │ VX Vault                                           │
+  # └────────────────────────────────────────────────────┘
   connector-vxvault:
     image: opencti/connector-vxvault:latest
     environment:
@@ -100,7 +111,9 @@
       opencti:
         condition: service_healthy
 
-  # Tweetfeed
+  # ┌────────────────────────────────────────────────────┐
+  # │ Tweetfeed                                          │
+  # └────────────────────────────────────────────────────┘
   connector-tweetfeed:
     image: opencti/connector-tweetfeed:latest
     environment:
@@ -123,7 +136,9 @@
       opencti:
         condition: service_healthy
 
-  # Stopforumspam
+  # ┌────────────────────────────────────────────────────┐
+  # │ Stopforumspam                                      │
+  # └────────────────────────────────────────────────────┘
   connector-stopforumspam:
     image: opencti/connector-stopforumspam:latest
     environment:
@@ -141,12 +156,171 @@
       opencti:
         condition: service_healthy
 
-##########################
-##### Needs API Keys #####
-##########################
+  # ┌────────────────────────────────────────────────────┐
+  # │ RansomwareLive                                     │
+  # └────────────────────────────────────────────────────┘
+  connector-ransomwarelive:
+    image: opencti/connector-ransomwarelive:latest
+    environment:
+      - OPENCTI_URL=http://opencti:8080
+      - OPENCTI_TOKEN=${OPENCTI_ADMIN_TOKEN}
+      - CONNECTOR_ID= # Valid UUIDv4
+      - CONNECTOR_NAME=RansomwareLive
+      - CONNECTOR_SCOPE=ransomwarelive
+      - CONNECTOR_LOG_LEVEL=error
+    restart: always
+    depends_on:
+      opencti:
+        condition: service_healthy
 
-  # CVE - NVD
-  # https://nvd.nist.gov/developers/request-an-api-key
+  # ┌────────────────────────────────────────────────────┐
+  # │ Red Flag Domains                                   │
+  # └────────────────────────────────────────────────────┘
+  connector-redflag-domains:
+    image: opencti/connector-red-flag-domains:latest
+    environment:
+      - OPENCTI_URL=http://opencti:8080
+      - OPENCTI_TOKEN=${OPENCTI_ADMIN_TOKEN}
+      - CONNECTOR_ID= # Valid UUIDv4
+      - "CONNECTOR_NAME=Red Flag Domains"
+      - CONNECTOR_SCOPE=red-flag-domains
+      - UPDATE_EXISTING_DATA=False
+      - CONNECTOR_LOG_LEVEL=info
+      - REDFLAGDOMAINS_URL=https://dl.red.flag.domains/daily/
+    restart: always
+    depends_on:
+      opencti:
+        condition: service_healthy
+
+  # ┌────────────────────────────────────────────────────┐
+  # │ Aerospace SPARTA                                   │
+  # └────────────────────────────────────────────────────┘
+  connector-sparta:
+    image: opencti/connector-sparta:latest
+    environment:
+      # OpenCTI parameters - REQUIRED
+      - OPENCTI_URL=http://opencti:8080
+      - OPENCTI_TOKEN=${OPENCTI_ADMIN_TOKEN}
+      # Connector's definition parameters - REQUIRED
+      - CONNECTOR_ID= # Valid UUIDv4
+      # Connector's definition parameters - OPTIONAL
+      # - CONNECTOR_NAME=Aerospace SPARTA
+      # - CONNECTOR_SCOPE=["attack-pattern", "course-of-action", "indicator", "identity"]
+      # - CONNECTOR_LOG_LEVEL=error
+      # - CONNECTOR_DURATION_PERIOD=PT5H
+      # SPARTA definition parameters - OPTIONAL
+      # - SPARTA_BASE_URL=https://sparta.aerospace.org/download/STIX?f=latest
+    restart: always
+    depends_on:
+      opencti:
+        condition: service_healthy
+
+
+  # ┌────────────────────────────────────────────────────┐
+  # │ PGL Yoyo                                           │
+  # └────────────────────────────────────────────────────┘
+  connector-pgl-yoyo:
+    image: opencti/connector-pgl-yoyo:latest
+    environment:
+      - OPENCTI_URL=http://opencti:8080
+      - OPENCTI_TOKEN=${OPENCTI_ADMIN_TOKEN}
+      - CONNECTOR_ID= # Valid UUIDv4
+      - CONNECTOR_NAME=PGL Yoyo Ad Server Blocklist
+      - CONNECTOR_SCOPE=observable
+      - CONNECTOR_CONFIDENCE_LEVEL=50
+      - CONNECTOR_LOG_LEVEL=info
+      - CONNECTOR_DURATION_PERIOD=PT12H
+      - CONNECTOR_UPDATE_EXISTING_DATA=true
+      - PGL_BUNDLE_MODE=true
+      - PGL_REPORT_PER_RUN=true
+      - PGL_IDENTITY_NAME=Peter Lowe (PGL Blocklist)
+      - PGL_IDENTITY_CLASS=organization
+      - PGL_IDENTITY_DESCRIPTION=Curated ad server & tracking blocklist maintained by Peter G. Lowe (yoyo.org).
+    restart: always
+    depends_on:
+      opencti:
+        condition: service_healthy
+
+
+  # ┌────────────────────────────────────────────────────┐
+  # │ montysecurity C2-Tracker                           │
+  # └────────────────────────────────────────────────────┘
+  connector-c2tracker:
+    image: opencti/connector-montysecurity-c2-tracker:latest
+    environment:
+      - OPENCTI_URL=http://opencti:8080
+      - OPENCTI_C2TRACKER_TOKEN= # Valid UUIDv4
+    restart: always
+    depends_on:
+      opencti:
+        condition: service_healthy
+
+  # ┌────────────────────────────────────────────────────┐
+  # │ MITRE Atlas                                        │
+  # └────────────────────────────────────────────────────┘
+  connector-mitre-atlas:
+    image: opencti/connector-mitre-atlas:latest
+    environment:
+      - OPENCTI_URL=http://opencti:8080
+      - OPENCTI_TOKEN=${OPENCTI_ADMIN_TOKEN}
+      - CONNECTOR_ID= # Valid UUIDv4
+      - "CONNECTOR_NAME=MITRE ATLAS"
+      - CONNECTOR_SCOPE=identity,attack-pattern,course-of-action,relationship,x-mitre-collection,x-mitre-matrix,x-mitre-tactic
+      - CONNECTOR_RUN_AND_TERMINATE=false
+      - CONNECTOR_LOG_LEVEL=error
+      - MITRE_ATLAS_URL=https://raw.githubusercontent.com/mitre-atlas/atlas-navigator-data/main/dist/stix-atlas.json
+      - MITRE_ATLAS_INTERVAL=7 # In days, must be strictly greater than 1
+    restart: always
+    depends_on:
+      opencti:
+        condition: service_healthy
+
+  # ┌────────────────────────────────────────────────────┐
+  # │ FIRST EPSS                                         │
+  # └────────────────────────────────────────────────────┘
+  connector-first-epss-bulk:
+    image: opencti/connector-first-epss-bulk:latest
+    environment:
+      - OPENCTI_URL=http://opencti:8080
+      - OPENCTI_TOKEN=${OPENCTI_ADMIN_TOKEN}
+      - CONNECTOR_ID= # Valid UUIDv4
+      - CONNECTOR_NAME="External Import First EPSS Connector"
+      - CONNECTOR_LOG_LEVEL=error
+      - CONNECTOR_DURATION_PERIOD=PT24H
+      # Connector's custom execution parameters
+      - FIRST_EPSS_API_BASE_URL=https://epss.cyentia.com
+    restart: always
+    depends_on:
+      opencti:
+        condition: service_healthy
+
+  # ┌────────────────────────────────────────────────────┐
+  # │ DISARM Framework                                   │
+  # └────────────────────────────────────────────────────┘
+  connector-disarm-framework:
+    image: opencti/connector-disarm-framework:latest
+    environment:
+      - OPENCTI_URL=http://opencti:8080
+      - OPENCTI_TOKEN=${OPENCTI_ADMIN_TOKEN}
+      - CONNECTOR_ID= # Valid UUIDv4
+      - "CONNECTOR_NAME=DISARM Framework"
+      - CONNECTOR_SCOPE=marking-definition,identity,attack-pattern,course-of-action,intrusion-set,campaign,malware,tool,report,narrative,event,channel
+      - CONNECTOR_RUN_AND_TERMINATE=false
+      - CONNECTOR_LOG_LEVEL=error
+      - DISARM_FRAMEWORK_URL=https://raw.githubusercontent.com/DISARMFoundation/DISARMframeworks/main/generated_files/DISARM_STIX/DISARM.json
+    restart: always
+    depends_on:
+      opencti:
+        condition: service_healthy
+
+  ##############################################
+  #                Need API Key                #
+  ##############################################
+  
+  # ┌────────────────────────────────────────────────────┐
+  # │ CVE - NVD                                          │
+  # | https://nvd.nist.gov/developers/request-an-api-key │
+  # └────────────────────────────────────────────────────┘
   connector-cve:
     image: opencti/connector-cve:latest
     environment:
@@ -157,8 +331,10 @@
       opencti:
         condition: service_healthy
 
-  # AbuseIPDB
-  # https://www.abuseipdb.com/api
+  # ┌────────────────────────────────────────────────────┐
+  # │ AbuseIPDB                                          │
+  # | https://www.abuseipdb.com/api                      │ 
+  # └────────────────────────────────────────────────────┘
   connector-abuseipdb-ipblacklist:
     image: opencti/connector-abuseipdb-ipblacklist:latest
     environment:
@@ -180,8 +356,10 @@
       opencti:
         condition: service_healthy
 
-  # URLhaus Recent Payloads
-  # https://urlhaus.abuse.ch/api/
+  # ┌────────────────────────────────────────────────────┐
+  # │ URLhaus Recent Payloads                            │
+  # | https://urlhaus.abuse.ch/api/                      │
+  # └────────────────────────────────────────────────────┘
   connector-urlhaus-recent-payloads:
     image: opencti/connector-urlhaus-recent-payloads:latest
     environment:
@@ -205,9 +383,11 @@
     depends_on:
       opencti:
         condition: service_healthy
-  
-  # AlienVault
-  # https://otx.alienvault.com/api
+
+  # ┌────────────────────────────────────────────────────┐
+  # │ AlienVault                                         │
+  # | https://otx.alienvault.com/api                     │
+  # └────────────────────────────────────────────────────┘
   connector-alienvault:
     image: opencti/connector-alienvault:latest
     environment:
