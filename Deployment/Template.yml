@@ -2,9 +2,9 @@
   #    OPENCTI Connector    #
   ###########################
 
-  # ┌────────────────────────────────────────────────────┐
-  # │ CISA Known Exploited Vulnerabilities               │
-  # └────────────────────────────────────────────────────┘
+  # ┌──────────────────────────────────────┐
+  # │ CISA Known Exploited Vulnerabilities │
+  # └──────────────────────────────────────┘
   connector-cisa-known-exploited-vulnerabilities:
     image: opencti/connector-cisa-known-exploited-vulnerabilities:latest
     environment:
@@ -15,9 +15,9 @@
       opencti:
         condition: service_healthy
 
-  # ┌────────────────────────────────────────────────────┐
-  # │ CriminalIP C2-Daily-Feed                           │
-  # └────────────────────────────────────────────────────┘
+  # ┌──────────────────────────┐
+  # │ CriminalIP C2-Daily-Feed │
+  # └──────────────────────────┘
   connector-criminalip-c2-daily-feed:
     image: opencti/connector-criminalip-c2-daily-feed:latest
     environment:
@@ -36,9 +36,9 @@
       opencti:
         condition: service_healthy
   
-  # ┌────────────────────────────────────────────────────┐
-  # │ Threat Fox                                         │
-  # └────────────────────────────────────────────────────┘
+  # ┌────────────┐
+  # │ Threat Fox │
+  # └────────────┘
   connector-threatfox:
     image: opencti/connector-threatfox:latest
     environment:
@@ -49,9 +49,9 @@
       opencti:
         condition: service_healthy
 
-  # ┌────────────────────────────────────────────────────┐
-  # │ URLhaus                                            │
-  # └────────────────────────────────────────────────────┘
+  # ┌─────────┐
+  # │ URLhaus │
+  # └─────────┘
   connector-urlhaus:
     image: opencti/connector-urlhaus:latest
     environment:
@@ -71,9 +71,9 @@
       opencti:
         condition: service_healthy
 
-  # ┌────────────────────────────────────────────────────┐
-  # │ Wiz                                                │
-  # └────────────────────────────────────────────────────┘
+  # ┌─────┐
+  # │ Wiz │
+  # └─────┘
   connector-wiz:
     image: opencti/connector-wiz:latest
     environment:
@@ -90,9 +90,9 @@
     depends_on:
       opencti:
         condition: service_healthy
-  # ┌────────────────────────────────────────────────────┐
-  # │ VX Vault                                           │
-  # └────────────────────────────────────────────────────┘
+  # ┌──────────┐
+  # │ VX Vault │
+  # └──────────┘
   connector-vxvault:
     image: opencti/connector-vxvault:latest
     environment:
@@ -111,9 +111,9 @@
       opencti:
         condition: service_healthy
 
-  # ┌────────────────────────────────────────────────────┐
-  # │ Tweetfeed                                          │
-  # └────────────────────────────────────────────────────┘
+  # ┌───────────┐
+  # │ Tweetfeed │
+  # └───────────┘
   connector-tweetfeed:
     image: opencti/connector-tweetfeed:latest
     environment:
@@ -136,9 +136,9 @@
       opencti:
         condition: service_healthy
 
-  # ┌────────────────────────────────────────────────────┐
-  # │ Stopforumspam                                      │
-  # └────────────────────────────────────────────────────┘
+  # ┌───────────────┐
+  # │ Stopforumspam │
+  # └───────────────┘
   connector-stopforumspam:
     image: opencti/connector-stopforumspam:latest
     environment:
@@ -156,9 +156,9 @@
       opencti:
         condition: service_healthy
 
-  # ┌────────────────────────────────────────────────────┐
-  # │ RansomwareLive                                     │
-  # └────────────────────────────────────────────────────┘
+  # ┌────────────────┐
+  # │ RansomwareLive │
+  # └────────────────┘
   connector-ransomwarelive:
     image: opencti/connector-ransomwarelive:latest
     environment:
@@ -173,9 +173,9 @@
       opencti:
         condition: service_healthy
 
-  # ┌────────────────────────────────────────────────────┐
-  # │ Red Flag Domains                                   │
-  # └────────────────────────────────────────────────────┘
+  # ┌──────────────────┐
+  # │ Red Flag Domains │
+  # └──────────────────┘
   connector-redflag-domains:
     image: opencti/connector-red-flag-domains:latest
     environment:
@@ -192,9 +192,9 @@
       opencti:
         condition: service_healthy
 
-  # ┌────────────────────────────────────────────────────┐
-  # │ Aerospace SPARTA                                   │
-  # └────────────────────────────────────────────────────┘
+  # ┌──────────────────┐
+  # │ Aerospace SPARTA │
+  # └──────────────────┘
   connector-sparta:
     image: opencti/connector-sparta:latest
     environment:
@@ -215,10 +215,9 @@
       opencti:
         condition: service_healthy
 
-
-  # ┌────────────────────────────────────────────────────┐
-  # │ PGL Yoyo                                           │
-  # └────────────────────────────────────────────────────┘
+  # ┌──────────┐
+  # │ PGL Yoyo │
+  # └──────────┘
   connector-pgl-yoyo:
     image: opencti/connector-pgl-yoyo:latest
     environment:
@@ -241,10 +240,9 @@
       opencti:
         condition: service_healthy
 
-
-  # ┌────────────────────────────────────────────────────┐
-  # │ montysecurity C2-Tracker                           │
-  # └────────────────────────────────────────────────────┘
+  # ┌──────────────────────────┐
+  # │ montysecurity C2-Tracker │
+  # └──────────────────────────┘
   connector-c2tracker:
     image: opencti/connector-montysecurity-c2-tracker:latest
     environment:
@@ -255,9 +253,9 @@
       opencti:
         condition: service_healthy
 
-  # ┌────────────────────────────────────────────────────┐
-  # │ MITRE Atlas                                        │
-  # └────────────────────────────────────────────────────┘
+  # ┌─────────────┐
+  # │ MITRE Atlas │
+  # └─────────────┘
   connector-mitre-atlas:
     image: opencti/connector-mitre-atlas:latest
     environment:
@@ -275,9 +273,9 @@
       opencti:
         condition: service_healthy
 
-  # ┌────────────────────────────────────────────────────┐
-  # │ FIRST EPSS                                         │
-  # └────────────────────────────────────────────────────┘
+  # ┌────────────┐
+  # │ FIRST EPSS │
+  # └────────────┘
   connector-first-epss-bulk:
     image: opencti/connector-first-epss-bulk:latest
     environment:
@@ -294,9 +292,9 @@
       opencti:
         condition: service_healthy
 
-  # ┌────────────────────────────────────────────────────┐
-  # │ DISARM Framework                                   │
-  # └────────────────────────────────────────────────────┘
+  # ┌──────────────────┐
+  # │ DISARM Framework │
+  # └──────────────────┘
   connector-disarm-framework:
     image: opencti/connector-disarm-framework:latest
     environment:
@@ -313,9 +311,11 @@
       opencti:
         condition: service_healthy
 
-  ##############################################
-  #                Need API Key                #
-  ##############################################
+  #        ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓  
+  #               ┌──────────────┐
+  #         ↓↓↓   │ Need API Key │  ↓↓↓           
+  #               └──────────────┘
+  #                ↓↓↓↓↓↓↓↓↓↓↓↓↓↓
   
   # ┌────────────────────────────────────────────────────┐
   # │ CVE - NVD                                          │
@@ -331,10 +331,10 @@
       opencti:
         condition: service_healthy
 
-  # ┌────────────────────────────────────────────────────┐
-  # │ AbuseIPDB                                          │
-  # | https://www.abuseipdb.com/api                      │ 
-  # └────────────────────────────────────────────────────┘
+  # ┌───────────────────────────────┐
+  # │ AbuseIPDB                     │
+  # | https://www.abuseipdb.com/api │ 
+  # └───────────────────────────────┘
   connector-abuseipdb-ipblacklist:
     image: opencti/connector-abuseipdb-ipblacklist:latest
     environment:
@@ -356,10 +356,10 @@
       opencti:
         condition: service_healthy
 
-  # ┌────────────────────────────────────────────────────┐
-  # │ URLhaus Recent Payloads                            │
-  # | https://urlhaus.abuse.ch/api/                      │
-  # └────────────────────────────────────────────────────┘
+  # ┌───────────────────────────────┐
+  # │ URLhaus Recent Payloads       │
+  # | https://urlhaus.abuse.ch/api/ │
+  # └───────────────────────────────┘
   connector-urlhaus-recent-payloads:
     image: opencti/connector-urlhaus-recent-payloads:latest
     environment:
@@ -384,10 +384,10 @@
       opencti:
         condition: service_healthy
 
-  # ┌────────────────────────────────────────────────────┐
-  # │ AlienVault                                         │
-  # | https://otx.alienvault.com/api                     │
-  # └────────────────────────────────────────────────────┘
+  # ┌────────────────────────────────┐
+  # │ AlienVault                     │
+  # | https://otx.alienvault.com/api │
+  # └────────────────────────────────┘
   connector-alienvault:
     image: opencti/connector-alienvault:latest
     environment:
