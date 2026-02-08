@@ -32,11 +32,23 @@ All OpenCTI application services are **stateless** and can be scaled horizontall
 Recommended baseline for **production environments**:
 | Component      | Recommended                         |
 | -------------- | ----------------------------------- |
-| CPU            | 16+ vCPUs                            |
+| CPU            | 16+ vCPUs                           |
 | RAM            | 32+ GB                              |
-| Disk           | SSD, 600 GB+                        |
-| Docker         | 20+                                 |
-| Docker Compose | v2.x                                |
+| Disk           | SSD, 1 TB+                          |
+| OS			 | RHEL / Rocky OS / Debian / Ubuntu   |
+
+**Partitioning**:
+
+| Mount Point  | Filesystem 				| Size              | Device Type            |
+|-------------|-----------------------------|-------------------|------------------------|
+| swap        | swap       					| 16 GiB            | LVM					 |
+| /tmp        | ext4       					| 16 GiB            | LVM				     |
+| /           | ext4       					| 20 GiB            | LVM                    |
+| /boot       | ext4       					| 1 GiB             | Standard partition	 |
+| /boot/efi   | EFI System Partition        | 1 GiB             | Standard partition	 |
+| biosboot    | BIOS Boot			        | 1 GiB             | Standard partition	 |
+| /var        | ext4       					| Remaining storage | LVM                    |
+
 > **Note:**  
 > Larger datasets, multiple connectors, or high ingestion rates require additional CPU and RAM, especially for ElasticSearch/OpenSearch.
 </details>
