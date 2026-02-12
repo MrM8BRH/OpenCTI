@@ -92,7 +92,9 @@ systemctl disable ufw
 <details>
 <summary><b>Disable Transparent Huge Pages (THP)</b></summary>
 
-*   `nano /etc/systemd/system/disable-thp.service`
+```
+nano /etc/systemd/system/disable-thp.service
+```
 ```
 [Unit]
 Description=Disable Transparent Huge Pages (THP)
@@ -152,7 +154,7 @@ systemctl enable docker.socket
 </details>
 
 <details>
-<summary><b>OpenCTI Installation & Configration</b></summary>
+<summary><b>OpenCTI Installation & Configuration</b></summary>
 
 #### Download OpenCTI Docker Compose Files
 ```
@@ -176,6 +178,16 @@ OPENCTI_HEALTHCHECK_ACCESS_KEY=changeme
 ```
 docker compose up -d
 ```
+</details>
+
+<details>
+<summary><b>Feeds Configuration</b></summary>
+	
+- [TAXII Feed](https://docs.opencti.io/latest/usage/import/taxii-feed/)
+- [TAXII push](https://docs.opencti.io/latest/usage/import/taxii-push/)
+- [RSS Feed](https://docs.opencti.io/latest/usage/import/rss-feed/)
+- [CSV Feed](https://docs.opencti.io/latest/usage/import/csv-feed/)
+- [JSON Feed](https://docs.opencti.io/latest/usage/import/json-feed/)
 </details>
 
 <details>
