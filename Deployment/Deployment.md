@@ -35,7 +35,7 @@ Recommended baseline for **production environments**:
 | CPU            | 16+ vCPUs                           |
 | RAM            | 32+ GB                              |
 | Disk           | SSD, 1 TB+                          |
-| OS			 | RHEL / Rocky OS / Debian / Ubuntu   |
+| OS			 | RHEL / Rocky OS / Debian			   |
 
 **Partitioning**:
 
