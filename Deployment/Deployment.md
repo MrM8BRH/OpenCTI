@@ -136,7 +136,7 @@ reboot
 <details>
 <summary><b>Docker Installation</b></summary>
 
-#### Install Docker Engine (RHEL)
+#### Install Docker Engine on RHEL
 ```
 sudo dnf -y install dnf-plugins-core
 sudo dnf config-manager --add-repo https://download.docker.com/linux/rhel/docker-ce.repo
@@ -155,6 +155,12 @@ docker compose version
 sudo systemctl start docker.socket
 sudo systemctl enable docker.socket
 ```
+
+#### Install Docker Engine on Debian
+[Link](https://docs.docker.com/engine/install/debian/)
+
+#### Install Docker Engine on Ubuntu
+[Link](https://docs.docker.com/engine/install/ubuntu/)
 </details>
 
 <details>
