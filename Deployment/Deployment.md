@@ -454,3 +454,16 @@ docker logs container_name
 
 - [Top 100 Cyber Security RSS Feeds (Security RSS)](https://rss.feedspot.com/cyber_security_rss_feeds/)
 </details>
+
+<details>
+<summary><b>Upgrading the OpenCTI Instance</b></summary>
+
+```
+# Pull any new/updated images from the DockerHub repository
+docker compose pull
+
+# Tear down the current containers, and re-deploy them using the latest images that have been pulled.
+docker compose up -d --force-recreate
+```
+</details>
+
