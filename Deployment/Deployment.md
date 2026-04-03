@@ -183,6 +183,7 @@ Change the following
 OPENCTI_ADMIN_PASSWORD=changeme
 OPENCTI_ADMIN_TOKEN=ChangeMe_UUIDv4
 OPENCTI_HEALTHCHECK_ACCESS_KEY=changeme
+OPENCTI_ENCRYPTION_KEY=ChangeMeWithGeneratedBase64Key # openssl rand -base64 32
 ```
 #### Start OpenCTI
 ```
@@ -215,7 +216,7 @@ cd /opt/opencti/certs
 .env
 ```
 OPENCTI_HEALTHCHECK_ACCESS_KEY=changeme
-OPENCTI_EXTERNAL_SCHEME=http
+OPENCTI_EXTERNAL_SCHEME=https
 ```
 docker-compose.yml
 ```
