@@ -166,24 +166,17 @@ sudo systemctl enable docker.socket
 <details>
 <summary><b>OpenCTI Installation & Configuration</b></summary>
 
-#### Download OpenCTI Docker Compose Files
+#### Download OpenCTI Docker
+[Link](https://docs.opencti.io/latest/deployment/installation/#using-docker)
 ```
 mkdir -p /opt/opencti && cd /opt/opencti
-wget https://raw.githubusercontent.com/OpenCTI-Platform/docker/refs/heads/master/docker-compose.yml
-wget https://raw.githubusercontent.com/OpenCTI-Platform/docker/refs/heads/master/rabbitmq.conf
-wget https://raw.githubusercontent.com/OpenCTI-Platform/docker/refs/heads/master/.env.sample
+git clone https://github.com/OpenCTI-Platform/docker.git
+cd docker
 ```
 #### Configure Environment Variables
 ```
 cp .env.sample .env
 nano .env
-```
-Change the following
-```
-OPENCTI_ADMIN_PASSWORD=changeme
-OPENCTI_ADMIN_TOKEN=ChangeMe_UUIDv4
-OPENCTI_HEALTHCHECK_ACCESS_KEY=changeme
-OPENCTI_ENCRYPTION_KEY=ChangeMeWithGeneratedBase64Key # openssl rand -base64 32
 ```
 #### Start OpenCTI
 ```
